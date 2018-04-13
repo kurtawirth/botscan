@@ -17,7 +17,7 @@
 #' @export
 
 botscan <- function(x){
-  tweets <- rtweet::search_tweets(x, n = 18000, include_rts = FALSE)
+  tweets <- rtweet::search_tweets(x, n = 1000, include_rts = FALSE)
 
   userbots <- botrnot::botornot(tweets, fast = TRUE)
 
