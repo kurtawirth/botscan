@@ -10,7 +10,11 @@ botscan(x)
 \item{x}{A Twitter search query in quotation marks.}
 }
 \value{
-A number
+Percentage of users within the requested conversation that are
+estimated by botornot to have at least a 90% chance of being a bot.
+
+Examples fail unless you have created and installed Twitter tokens, per
+instructions provided at http://rtweet.info/articles/auth.html.
 }
 \description{
 Scans Twitter Conversations For Bots

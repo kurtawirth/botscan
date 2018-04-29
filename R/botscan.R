@@ -9,8 +9,12 @@
 #'
 #' @param x A Twitter search query in quotation marks.
 #'
-#' @return A number
+#' @return Percentage of users within the requested conversation that are
+#' estimated by botornot to have at least a 90% chance of being a bot.
 #'
+#' Examples fail unless you have created and installed Twitter tokens, per
+#' instructions provided at http://rtweet.info/articles/auth.html.
+#' 
 #' @examples
 #' \dontrun{botscan("#rtweets")}
 #' \dontrun{botscan("trump")}
