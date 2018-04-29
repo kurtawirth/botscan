@@ -22,25 +22,29 @@ This package connects <code>botrnot</code> to [<code>rtweet</code>](https://gith
 Usage
 -----
 
-There is only one function currently live for botscan. The sole argument takes any Twitter query and produces the percentage of the conversation's authors that are at least 90% likely to be a bot.
+There is only one function currently live for botscan. The first argument takes any Twitter query and the second takes a number, less than one, that represents the desired threshhold at which an account should be considered a bot. The second argument's default is .899, understood as any account that is more than 89.9 percent likely to be a bot should be considered a bot.
 
 ``` r
 ## load botscan
 library(botscan)
 
-## enter query surrounded by quotation marks
+## Enter query surrounded by quotation marks
 botscan("#rstats")
 #> [1] 0.1642276
 
 ## Result is percentage - in this case, 16.42276%.
+
+## If desired, choose the threshhold
+botscan("#rstats", .995)
+#> [1] 0.02398524
+
+## Result is percentage - in this case, 02.398524%.
 ```
 
 Twitter rate limits cap the number of search results returned to 18,000 every 15 minutes. Thus, excessive use of <code>botscan</code> in a short amount of time may result in a warning and inability to pull results. In this event, simply wait 15 minutes and try again.
 
 Notes
 -----
-
-\*<code>Botscan</code> uses a threshold of 90% likeliness to classify a handle as a bot.
 
 \*Probability is calculated by unique users, not per message. Thus, <code>botscan</code> has no way to control for bot conversation volume.
 
@@ -52,8 +56,6 @@ Expected Updates
 ----------------
 
 \*Add argument to allow for calculation based on conversation volume rather than unique authors.
-
-\*Add argument that will make the <code>botscan</code> threshold of 90% customizable.
 
 \*Add argument to allow for customization of method by which handles are classified, including averaging all probabilities
 
