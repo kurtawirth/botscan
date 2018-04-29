@@ -4,17 +4,18 @@
 \alias{botscan}
 \title{botscan}
 \usage{
-botscan(x)
+botscan(x, y = 0.899)
 }
 \arguments{
 \item{x}{A Twitter search query in quotation marks.}
+
+\item{y}{Number, less than one, that determines which botornot probability 
+threshhold to return. Default is set at 0.899. Only users estimated to be 
+more likely than the threshhold provided will be regarded as a bot.}
 }
 \value{
 Percentage of users within the requested conversation that are
-estimated by botornot to have at least a 90% chance of being a bot.
-
-Examples fail unless you have created and installed Twitter tokens, per
-instructions provided at http://rtweet.info/articles/auth.html.
+estimated by botornot to be a bot.
 }
 \description{
 Scans Twitter Conversations For Bots
@@ -26,6 +27,10 @@ conversation that are likely to be bots.
 \examples{
 \dontrun{botscan("#rtweets")}
 \dontrun{botscan("trump")}
+
+Examples fail unless you have created and installed Twitter tokens, per
+instructions provided at http://rtweet.info/articles/auth.html.
+
 }
 \author{
 Kurt Wirth
