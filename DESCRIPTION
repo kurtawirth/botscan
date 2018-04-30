@@ -1,20 +1,21 @@
 Package: botscan
 Type: Package
 Title: Scans Twitter Conversations For Bots
-Version: 0.2.0
+Version: 1.0.0
 Author: Kurt Wirth
 Maintainer: Kurt Wirth <KurtAWirth@gmail.com>
 Description: This package accepts any Twitter search query as an input and
-    outputs the percentage of users producing that conversation that are
-    predicted to be non-human, or "bots". This tool uses rtweets to search
-    Twitter and botrnot and its machine learning technique to analyze handles.
-    IMPORTANT - In order to install this package, you must first install botrnot 
-    from https://github.com/mkearney/botrnot.
+    outputs the percentage of the conversation 's tweets that are
+    predicted to be authored by non-humans, or "bots". This tool uses rtweets 
+    to search Twitter and botrnot and its machine learning technique to analyze 
+    handles.IMPORTANT - In order to install this package, you must first install 
+    botrnot from https://github.com/mkearney/botrnot.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
     rtweet,
-    botrnot
+    botrnot,
+    dplyr
 RoxygenNote: 6.0.1
 Suggests: testthat
