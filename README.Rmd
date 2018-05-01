@@ -25,7 +25,7 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("kurtawirth/botscan")
 ```
 
-This package connects <code>botrnot</code> to [<code>rtweet</code>]
+This package connects <code>botrnot</code> to [rtweet]
 (https://github.com/mkearney/rtweet). As a result, each user must have 
 previously acquired authentication from Twitter and instructions to do that 
 [can be found here](http://rtweet.info/articles/auth.html).
