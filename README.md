@@ -3,7 +3,7 @@ botscan
 Kurt Wirth
 April 30, 2018
 
-A package extending the capability of \[botrnot\] (<https://github.com/mkearney/botrnot>) by measuring suspected bot activity in any given Twitter query. The model is 91.78% accurate when classifying bots and 92.61% accurate when classifying non-bots, per \[mkearney\] (<https://github.com/mkearney>).
+A package extending the capability of [botrnot](https://github.com/mkearney/botrnot) by measuring suspected bot activity in any given Twitter query. The model is 91.78% accurate when classifying bots and 92.61% accurate when classifying non-bots, per [mkearney](https://github.com/mkearney).
 
 Install
 -------
@@ -17,7 +17,7 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("kurtawirth/botscan")
 ```
 
-This package connects <code>botrnot</code> to \[<code>rtweet</code>\] (<https://github.com/mkearney/rtweet>). As a result, each user must have previously acquired authentication from Twitter and instructions to do that [can be found here](http://rtweet.info/articles/auth.html).
+This package connects <code>botrnot</code> to [rtweet](https://github.com/mkearney/rtweet). As a result, each user must have previously acquired authentication from Twitter and instructions to do that [can be found here](http://rtweet.info/articles/auth.html).
 
 Usage
 -----
