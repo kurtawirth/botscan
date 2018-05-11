@@ -3,7 +3,7 @@ botscan
 Kurt Wirth
 April 30, 2018
 
-A package extending the capability of [botrnot](https://github.com/mkearney/botrnot) by measuring suspected bot activity in any given Twitter query. The model is 91.78% accurate when classifying bots and 92.61% accurate when classifying non-bots, per [mkearney](https://github.com/mkearney).
+A package extending the capability of [botrnot](https://github.com/mkearney/botrnot) by measuring suspected bot activity in any given Twitter query. The model is 91.78% accurate when classifying bots and 92.61% accurate when classifying non-bots, per [mkearney](https://github.com/mkearney). This README is derived from Dr. Kearney's excellent [rtweet]((https://github.com/mkearney/rtweet)) documentation.
 
 Install
 -------
@@ -14,10 +14,11 @@ Install from Github with the following code:
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
+devtools::install_github("mkearney/botrnot")
 devtools::install_github("kurtawirth/botscan")
 ```
 
-This package connects <code>botrnot</code> to [rtweet](https://github.com/mkearney/rtweet). As a result, each user must have previously acquired authentication from Twitter and instructions to do that [can be found here](http://rtweet.info/articles/auth.html).
+This package connects <code>botrnot</code> to <code>rtweet</code>. As a result, each user must have previously acquired authentication from Twitter and instructions to do that [can be found here](http://rtweet.info/articles/auth.html).
 
 Usage
 -----
@@ -63,16 +64,3 @@ Notes
 \*Tweets are gathered by searching Twitter for a given query.
 
 \*In an effort to avoid the Twitter rate limit cap, <code>botscan</code> limits searches to 1000 results.
-
-Expected Updates
-----------------
-
-\*Additional tests to ensure stability.
-
-\*Add argument to allow for choice of whether to include retweets in count.
-
-\*Add argument to allow for customization of method by which handles are classified, including averaging all probabilities.
-
-\*Add argument to allow access of gathered data such as <code>rtweet</code> file and <code>botrnot</code> list of handles and corresponding bot probability.
-
-\*Add argument to introduce additional Twitter gathering data techniques (such as streaming and geo-location).

@@ -17,8 +17,13 @@
 #' conversation-level or user-level data. Default is set to FALSE, understood
 #' as analyzing conversation-level data.
 #'
-#' @return Percentage of users within the requested conversation that are
-#' estimated by botornot to be a bot.
+#' @return Percentage of users, equal to or less than 1 (read: 100%) and zero 
+#' within the requested conversation that are estimated by botornot to be a bot.
+#' 
+#' When "user_level" is set to TRUE, the value returned is the percentage of
+#' users within the conversation that are estimated to be bots. When
+#' "user_level" is set to FALSE, the value returned is the percentage of the
+#' conversation that is estimated to be authored by bots.
 #'
 #' @examples
 #' \dontrun{botscan("#rtweets")}

@@ -1,7 +1,7 @@
 Package: botscan
 Type: Package
 Title: Scans Twitter Conversations For Bots
-Version: 1.0.1
+Version: 1.0.2
 Author: Kurt Wirth
 Maintainer: Kurt Wirth <KurtAWirth@gmail.com>
 Description: This package accepts any Twitter search query as an input and
