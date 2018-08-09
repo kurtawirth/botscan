@@ -10,7 +10,7 @@ Description: This package accepts any Twitter search query as an input and
     to search Twitter and botrnot and its machine learning technique to analyze 
     handles.IMPORTANT - In order to install this package, you must first install 
     botrnot from https://github.com/mkearney/botrnot.
-License: GPL-3
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
