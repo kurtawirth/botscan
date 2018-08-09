@@ -33,11 +33,18 @@
 setup_botscan <- function(mashape_key, consumer_key, consumer_secret, 
                           access_token, access_token_secret){
   
+  twitter_app_auth <- list(consumer_key = consumer_key,
+                           consumer_secret = consumer_secret,
+                           access_token = access_token,
+                           access_token_secret = access_token_secret)
+  
+  reticulate::source_python("~/Desktop/rtm-bot2.py")
+  
+  bom <- create_bom(mashape_key, twitter_app_auth)
+  
+  assign("bom", bom)
+  
   return(list(mashape_key = mashape_key, 
-              twitter_app_auth = list(consumer_key = consumer_key,
-                                      consumer_secret = consumer_secret,
-                                      access_token = access_token,
-                                      access_token_secret = access_token_secret)
-              )
+              twitter_app_auth = twitter_app_auth)
          )
 }

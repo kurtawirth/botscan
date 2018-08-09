@@ -1,8 +1,8 @@
 Package: botscan
 Type: Package
 Title: Scans Twitter Conversations For Bots
-Version: 1.0.2
-Author: Kurt Wirth
+Version: 1.0.3
+Author: Kurt Wirth and Ryan T. Moore
 Maintainer: Kurt Wirth <KurtAWirth@gmail.com>
 Description: This package accepts any Twitter search query as an input and
     outputs the percentage of the conversation 's tweets that are
@@ -16,6 +16,7 @@ LazyData: true
 Imports:
     rtweet,
     botrnot,
-    dplyr
-RoxygenNote: 6.0.1
+    dplyr,
+    reticulate
+RoxygenNote: 6.1.0
 Suggests: testthat
