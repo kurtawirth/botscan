@@ -8,9 +8,8 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-A package extending the capability of [botrnot](https://github.com/mkearney/botrnot) by measuring suspected bot activity in any 
-given Twitter query. The model is 91.78% accurate when classifying bots and 
-92.61% accurate when classifying non-bots, per [mkearney](https://github.com/mkearney). This README is derived from Dr. Kearney's excellent [rtweet]((https://github.com/mkearney/rtweet)) documentation.
+A package extending the capability of [botometer](https://github.com/IUNetSci/botometer-python) by measuring suspected bot activity in any 
+given Twitter query. This README is derived from Matt Kearney's excellent [rtweet]((https://github.com/mkearney/rtweet)) documentation.
 
 ## Install
 
@@ -24,16 +23,26 @@ devtools::install_github("mkearney/botrnot")
 devtools::install_github("kurtawirth/botscan")
 ```
 
-This package connects <code>botrnot</code> to <code>rtweet</code>. As a result, each user must have 
+This package connects <code>botometer</code> to <code>rtweet</code>. As a result, each user must have 
 previously acquired authentication from Twitter and instructions to do that 
 [can be found here](http://rtweet.info/articles/auth.html).
 
+You will also need to install the latest version of Python, as botscan access Python-based botometer.
+
 ## Usage
 
-There is only one function currently live for botscan. 
+There are two functions currently live for botscan. 
 
-The first argument takes any Twitter query, complete with boolean operators if
-desired.
+To begin, the user must first enter the following code, inserting their keys where appropriate:
+
+```{setup instructions, eval = FALSE}
+bom <- setup_botscan("YourMashapeKey", "YourTwitterConsumerKey", "YourTwitterConsumerSecret", "YourTwitterAccessToken", "YourTwitterAccessTokenSecret")
+```
+
+Next, the fun begin with ```botscan```.
+
+Its first argument takes any Twitter query, complete with boolean operators if
+desired, surrounded by quotation marks.
 
 The second argument takes a number, less than one, that represents the desired 
 threshold at which an account should be considered a bot. This argument's 
@@ -70,16 +79,16 @@ botscan("rstats", user_level = TRUE)
 ##Result is percentage - in this case, 02.398524%.
 ```
 
+This process takes some time, as botscan is currently built on a loop of botometer. 
+Efforts to mainstream this process are set as future goals. A standard pull of
+tweets via botscan can take anywhere from fifteen to an hour or more.
+
 Twitter rate limits cap the number of search results returned to 18,000 every 
 15 minutes. Thus, excessive use of <code>botscan</code> in a short amount of 
 time may result in a warning and inability to pull results. In this event, 
 simply wait 15 minutes and try again.
 
 ## Notes
-
-*Retweets are not currently included in the conversation count.
-
-*Tweets are gathered by searching Twitter for a given query.
 
 *In an effort to avoid the Twitter rate limit cap, <code>botscan</code> limits 
 searches to 1000 results.
