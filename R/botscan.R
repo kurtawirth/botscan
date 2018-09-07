@@ -51,7 +51,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   userbots <- bom$check_accounts_in(users)
   
-  #I need to see what the ouput of this is. What form does userbots come in now?
+  #I need to see what the output of this is. What form does userbots come in now?
   
   nbots <- sum(userbots$prob_bot > th)
   
