@@ -40,3 +40,6 @@ rsconnect/
 ### R.Bookdown Stack ###
 # R package: bookdown caching files
 /*_files/
+
+# Keys
+botcheckkeys.R
