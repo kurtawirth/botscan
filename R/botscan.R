@@ -54,7 +54,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   # Running these usernames through botcheck
   
   for(user_idx in 1:length(users)){
-    userbots_list[[user_idx]] <- bom$check_account(users[i])
+    userbots_list[[user_idx]] <- bom$check_account(users[user_idx])
   }
   
   df_userbots <- as.data.frame(userbots_list)
