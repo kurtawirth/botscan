@@ -60,7 +60,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   # Make that object a usable dataframe
   
-  df_userbots <- bind_rows(lapply(userbots_list, as.data.frame.list))
+  df_userbots <- dplyr::bind_rows(lapply(userbots_list, as.data.frame.list))
   
   # Check scores against given threshold
   
