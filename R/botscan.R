@@ -54,10 +54,14 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   # Running these usernames through botcheck
   
   for(user_idx in 1:length(users)){
-    userbots_list[[user_idx]] <- bom$check_account(users[user_idx])
+    
+    tmp_userlist <- bom$check_account(users[user_idx])
+    
+    userbots_list[[user_idx]] <- unlist(tmp_userlist)
+    
   }
   
-  df_userbots <- as.data.frame(userbots_list)
+  df_userbots <- bind_rows(lapply(userbots_list, as.data.frame.list))
   
   #I need to see what the output of this is. What form does userbots come in now?
   
