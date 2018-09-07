@@ -5,7 +5,7 @@
 #' Takes a Twitter query and produces the proportion of users within that
 #' conversation that are likely to be bots.
 #'
-#' @author Kurt Wirth
+#' @author Kurt Wirth and Ryan T. Moore
 #'
 #' @param x A Twitter search query in quotation marks.
 #' 
@@ -37,19 +37,27 @@
 #Introducing the function
 
 botscan <- function(x, th = 0.899, user_level = FALSE) {
+  
   tweets <- rtweet::search_tweets(x, n = 1000, include_rts = FALSE)
 
-#This is the old code for the fake botornot  
-  
+  # This is the old code for a previously-used implementation of botornot:
   #userbots <- botrnot::botornot(tweets, fast = TRUE)
   
-#Taking the usernames and turning them into a vector
+  # Taking the usernames and turning them into a vector
   
   users <- tweets$screen_name
   
-#Running these usernames through botcheck
+  ## Initialize user data list:
   
-  userbots <- bom$check_accounts_in(users)
+  userbots_list <- list()
+  
+  # Running these usernames through botcheck
+  
+  for(user_idx in 1:length(users)){
+    userbots_list[[user_idx]] <- bom$check_account(users[i])
+  }
+  
+  df_userbots <- as.data.frame(userbots_list)
   
   #I need to see what the output of this is. What form does userbots come in now?
   
@@ -67,7 +75,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
     
     n <- length(tweets$screen_name)
     
-    return(sum(tweets$screen_name %in% bots$user)/n)
+    return(sum(tweets$screen_name %in% bots$user) / n)
     
   }
 
