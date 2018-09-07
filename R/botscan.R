@@ -34,24 +34,21 @@
 #' 
 #' @export
 
-#Introducing the function
+# Introduce the function
 
 botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   tweets <- rtweet::search_tweets(x, n = 1000, include_rts = FALSE)
 
-  # This is the old code for a previously-used implementation of botornot:
-  #userbots <- botrnot::botornot(tweets, fast = TRUE)
-  
-  # Taking the usernames and turning them into a vector
+  # Take the usernames and turn them into a vector
   
   users <- tweets$screen_name
   
-  ## Initialize user data list:
+  # Initialize user data list:
   
   userbots_list <- list()
   
-  # Running these usernames through botcheck
+  # Run these usernames through botcheck via a loop
   
   for(user_idx in 1:length(users)){
     
@@ -61,19 +58,29 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
     
   }
   
+  # Make that object a usable dataframe
+  
   df_userbots <- bind_rows(lapply(userbots_list, as.data.frame.list))
   
-  #I need to see what the output of this is. What form does userbots come in now?
+  # Check scores against given threshold
   
-  nbots <- sum(userbots$prob_bot > th)
+  nbots <- sum(df_userbots$scores.universal > th)
+  
+  # Filter out accounts that fall below the given threshold
   
   bots <- dplyr::filter(userbots, (userbots$prob_bot > th))
+  
+  # Return what percentage of users in the search are estimated to be bots
+  # according to the given threshold
   
   if(user_level) {
   
     n <- length(unique(tweets$screen_name))
     
     return(nbots/n)
+    
+  # Return what percentage of tweets in the search were authored by suspected
+  # bots according to the given threshold
   
   } else {
     
