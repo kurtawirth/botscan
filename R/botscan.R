@@ -68,7 +68,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   # Filter out accounts that fall below the given threshold
   
-  bots <- dplyr::filter(userbots, (userbots$prob_bot > th))
+  bots <- dplyr::filter(df_userbots, (df_userbots$scores.universal > th))
   
   # Return what percentage of users in the search are estimated to be bots
   # according to the given threshold
@@ -86,7 +86,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
     
     n <- length(tweets$screen_name)
     
-    return(sum(tweets$screen_name %in% bots$user) / n)
+    return(sum(tweets$screen_name %in% bots$screen_name) / n)
     
   }
 
