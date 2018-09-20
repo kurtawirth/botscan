@@ -34,24 +34,21 @@
 #' 
 #' @export
 
-#Introducing the function
+# Introduce the function
 
 botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   tweets <- rtweet::search_tweets(x, n = 1000, include_rts = FALSE)
 
-  # This is the old code for a previously-used implementation of botornot:
-  #userbots <- botrnot::botornot(tweets, fast = TRUE)
-  
-  # Taking the usernames and turning them into a vector
+  # Take the usernames and turn them into a vector
   
   users <- tweets$screen_name
   
-  ## Initialize user data list:
+  # Initialize user data list:
   
   userbots_list <- list()
   
-  # Running these usernames through botcheck
+  # Run these usernames through botcheck via a loop
   
   for(user_idx in 1:length(users)){
     
@@ -61,25 +58,39 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
     
   }
   
-  df_userbots <- bind_rows(lapply(userbots_list, as.data.frame.list))
+  # Make that object a usable dataframe
   
-  #I need to see what the output of this is. What form does userbots come in now?
+  df_userbots <- dplyr::bind_rows(lapply(userbots_list, as.data.frame.list))
   
-  nbots <- sum(userbots$prob_bot > th)
+  #Make df_userbots factor - BELOW ISN'T RIGHT?
   
-  bots <- dplyr::filter(userbots, (userbots$prob_bot > th))
+  #df_userbots$scores.universal <- as.numeric(df_userbots$scores.universal)
+  
+  # Check scores against given threshold
+  
+  nbots <- sum(df_userbots$scores.universal > th)
+  
+  # Filter out accounts that fall below the given threshold
+  
+  bots <- dplyr::filter(df_userbots, (df_userbots$scores.universal > th))
+  
+  # Return what percentage of users in the search are estimated to be bots
+  # according to the given threshold
   
   if(user_level) {
   
     n <- length(unique(tweets$screen_name))
     
     return(nbots/n)
+    
+  # Return what percentage of tweets in the search were authored by suspected
+  # bots according to the given threshold
   
   } else {
     
     n <- length(tweets$screen_name)
     
-    return(sum(tweets$screen_name %in% bots$user) / n)
+    return(sum(tweets$screen_name %in% bots$screen_name) / n)
     
   }
 
