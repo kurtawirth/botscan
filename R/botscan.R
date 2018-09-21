@@ -90,7 +90,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
     
     n <- length(tweets$screen_name)
     
-    return(sum(tweets$screen_name %in% bots$screen_name) / n)
+    return(sum(tweets$screen_name %in% bots$user.screen_name) / n)
     
   }
 
