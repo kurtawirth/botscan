@@ -62,9 +62,9 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   df_userbots <- dplyr::bind_rows(lapply(userbots_list, as.data.frame.list))
   
-  #Make df_userbots factor - BELOW ISN'T RIGHT?
+  #Make df_userbots$scores.universal numeric
   
-  #df_userbots$scores.universal <- as.numeric(df_userbots$scores.universal)
+  df_userbots$scores.universal <- as.numeric(df_userbots$scores.universal)
   
   # Check scores against given threshold
   
