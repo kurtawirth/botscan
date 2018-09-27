@@ -46,7 +46,7 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   # Initialize user data list:
   
-  userbots_list <- list()
+  df_userbots <- data.frame()
   
   # Run these usernames through botcheck via a loop
   
@@ -54,40 +54,15 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
     
     tmp_userlist <- bom$check_account(users[user_idx])
     
-    userbots_list[[user_idx]] <- unlist(tmp_userlist)
+    tmp_user_df <- as.data.frame(tmp_userlist)
     
+    tmp_user_df <- tmp_user_df %>% 
+      mutate_if(is.factor, as.character)
+ 
+    df_userbots <- dplyr::bind_rows(df_userbots, tmp_user_df)   
+
   }
   
-  # Make that object a usable dataframe
-  
-  df_userbots <- dplyr::bind_rows(lapply(userbots_list, as.data.frame.list))
-  
-  #Test
-  
-  #df_userbots <- lapply(userbots_list, as.data.frame.list)
-  
-  #Make everything but username numeric - select & mutate
-  
-  #df_userbots_numeric <- select(df_userbots[[1:5]], -contains("user.screen_name"))
-  
-  #or
-  
-  #df_userbots_numeric <- as.numeric(df_userbots[[2]], vars(-matches("user.screen_name")))
-  
-  #or
-  
-  #df_userbots[[, 1:2]] <- as.numeric(df_userbots[[, 1:2]])
-  
-  #Make username character
-  
-  #Does this work: lapply(df_userbots[[1]], class)
-  
-  #End Test
-  
-  #Make df_userbots$scores.universal numeric - the below is likely unneeded
-  
-  #df_userbots$scores.universal <- as.numeric(df_userbots$scores.universal)
-
   # Check scores against given threshold
   
   nbots <- sum(df_userbots$scores.universal > th)
