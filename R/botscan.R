@@ -52,7 +52,9 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   for(user_idx in 1:length(users)){
     
-    tmp_userlist <- bom$check_account(users[user_idx])
+    options(show.error.messages = TRUE)
+    
+    try(tmp_userlist <- bom$check_account(users[user_idx]), TRUE)
     
     tmp_user_df <- as.data.frame(tmp_userlist)
     
