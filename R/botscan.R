@@ -52,16 +52,16 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   for(user_idx in 1:length(users)){
     
-    options(show.error.messages = TRUE)
-    
-    try(tmp_userlist <- bom$check_account(users[user_idx]), TRUE)
+    tryCatch({
+    tmp_userlist <- bom$check_account(users[user_idx])
     
     tmp_user_df <- as.data.frame(tmp_userlist)
     
     tmp_user_df <- tmp_user_df %>% 
       mutate_if(is.factor, as.character)
  
-    df_userbots <- dplyr::bind_rows(df_userbots, tmp_user_df)   
+    df_userbots <- dplyr::bind_rows(df_userbots, tmp_user_df)
+    }, error = function(e) print(e))
 
   }
   
