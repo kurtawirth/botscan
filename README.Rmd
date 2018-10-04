@@ -1,7 +1,7 @@
 ---
 title: "botscan"
 author: "Kurt Wirth"
-date: "April 30, 2018"
+date: "`r Sys.Date()`"
 output: github_document
 ---
 
@@ -70,13 +70,13 @@ botscan("#rstats")
 botscan("#rstats", th = .995)
 #> [1] 0.02398524
 
-## Result is percentage - in this case, 02.398524%.
+## Result is percentage - in this case, 2.398524%.
 
 ##If desired, scan only users rather than the conversation as a whole.
 botscan("rstats", user_level = TRUE)
 #> [1] 0.1505155
 
-##Result is percentage - in this case, 02.398524%.
+## Result is percentage - in this case, 15.05155%.
 ```
 
 This process takes some time, as botscan is currently built on a loop of botometer. 
