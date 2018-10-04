@@ -13,7 +13,7 @@ given Twitter query. This README is derived from Matt Kearney's excellent [rtwee
 
 ## Install
 
-Install from Github with the following code:
+Install from GitHub with the following code:
 
 ```{r install, eval = FALSE}
 if (!requireNamespace("devtools", quietly = TRUE)) {
@@ -67,7 +67,7 @@ botscan("#rstats")
 ## Result is percentage - in this case, 16.42276%.
 
 ## If desired, choose the threshold
-botscan("#rstats", th = .995)
+botscan("#rstats", threshold = .995)
 #> [1] 0.02398524
 
 ## Result is percentage - in this case, 2.398524%.
