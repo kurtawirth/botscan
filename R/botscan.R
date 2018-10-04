@@ -36,7 +36,7 @@
 
 # Introduce the function
 
-botscan <- function(x, th = 0.899, user_level = FALSE) {
+botscan <- function(x, th = 0.899, user_level = FALSE, verbose = TRUE) {
   
   tweets <- rtweet::search_tweets(x, n = 1000, include_rts = FALSE)
 
@@ -48,19 +48,31 @@ botscan <- function(x, th = 0.899, user_level = FALSE) {
   
   df_userbots <- data.frame()
   
+  if(verbose == TRUE){
+    cat("Starting user account checking\n")
+  } 
+  
   # Run these usernames through botcheck via a loop
   
   for(user_idx in 1:length(users)){
     
+    if(verbose == TRUE){
+      if(user_idx %% 100 == 0){
+        cat("Checking user account ", users[user_idx], ", number ", user_idx, "\n", sep = "")
+      }
+    }
+    
     tryCatch({
-    tmp_userlist <- bom$check_account(users[user_idx])
+      
+      tmp_userlist <- bom$check_account(users[user_idx])
     
-    tmp_user_df <- as.data.frame(tmp_userlist)
+      tmp_user_df <- as.data.frame(tmp_userlist)
     
-    tmp_user_df <- tmp_user_df %>% 
-      dplyr::mutate_if(is.factor, as.character)
+      tmp_user_df <- tmp_user_df %>% 
+        dplyr::mutate_if(is.factor, as.character)
  
-    df_userbots <- dplyr::bind_rows(df_userbots, tmp_user_df)
+      df_userbots <- dplyr::bind_rows(df_userbots, tmp_user_df)
+    
     }, error = function(e) print(e))
 
   }
