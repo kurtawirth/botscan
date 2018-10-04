@@ -4,10 +4,13 @@
 \alias{botscan}
 \title{botscan}
 \usage{
-botscan(x, threshold = 0.899, user_level = FALSE, verbose = TRUE)
+botscan(x, n_tweets = 1000, threshold = 0.899, user_level = FALSE,
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{A string representing a Twitter search query, in quotation marks.}
+
+\item{n_tweets}{A number representing how many tweets to extract.}
 
 \item{threshold}{A number between zero and one that determines which botornot 
 probability threshold to return. Default is set at 0.899. Only users estimated to be 
