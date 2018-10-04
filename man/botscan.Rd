@@ -4,22 +4,25 @@
 \alias{botscan}
 \title{botscan}
 \usage{
-botscan(x, th = 0.899, user_level = FALSE)
+botscan(x, threshold = 0.899, user_level = FALSE, verbose = TRUE)
 }
 \arguments{
-\item{x}{A Twitter search query in quotation marks.}
+\item{x}{A string representing a Twitter search query, in quotation marks.}
 
-\item{th}{A number between zero and one that determines which botornot probability 
-threshhold to return. Default is set at 0.899. Only users estimated to be 
-more likely than the threshhold provided will be regarded as a bot.}
+\item{threshold}{A number between zero and one that determines which botornot 
+probability threshold to return. Default is set at 0.899. Only users estimated to be 
+more likely than the threshold provided will be regarded as a bot.}
 
 \item{user_level}{A logical that determines whether to analyze
 conversation-level or user-level data. Default is set to \code{FALSE}, understood
 as analyzing conversation-level data.}
+
+\item{verbose}{A logical that determines whether to print periodic progress
+updates.}
 }
 \value{
-Percentage of users, equal to or less than 1 (read: 100%) and zero 
-within the requested conversation that are estimated by botornot to be a bot.
+Proportion of users within the requested conversation that are 
+estimated by botometer to be bots.
 
 When \code{user_level} is set to \code{TRUE}, the value returned is the percentage of
 users within the conversation that are estimated to be bots. When
@@ -42,5 +45,5 @@ conversation that are likely to be bots.
 
 }
 \author{
-Kurt Wirth
+Kurt Wirth and Ryan T. Moore
 }

@@ -37,8 +37,6 @@
 #' 
 #' @export
 
-# Introduce the function
-
 botscan <- function(x, threshold = 0.899, user_level = FALSE, verbose = TRUE) {
   
   tweets <- rtweet::search_tweets(x, n = 1000, include_rts = FALSE)
@@ -86,7 +84,7 @@ botscan <- function(x, threshold = 0.899, user_level = FALSE, verbose = TRUE) {
   
   # Filter out accounts that fall below the given threshold
   
-  bots <- dplyr::filter(df_userbots, (df_userbots$cap.universal > th))
+  bots <- dplyr::filter(df_userbots, (df_userbots$cap.universal > threshold))
   
   # Return the proportion of users in the search estimated to be bots
   # (according to the given threshold)
