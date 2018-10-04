@@ -7,18 +7,21 @@
 #'
 #' @author Kurt Wirth and Ryan T. Moore
 #'
-#' @param x A Twitter search query in quotation marks.
+#' @param x A string representing a Twitter search query, in quotation marks.
 #' 
-#' @param th A number between zero and one that determines which botornot probability 
-#' threshhold to return. Default is set at 0.899. Only users estimated to be 
-#' more likely than the threshhold provided will be regarded as a bot.
+#' @param threshold A number between zero and one that determines which botornot 
+#' probability threshold to return. Default is set at 0.899. Only users estimated to be 
+#' more likely than the threshold provided will be regarded as a bot.
 #' 
 #' @param user_level A logical that determines whether to analyze
 #' conversation-level or user-level data. Default is set to \code{FALSE}, understood
 #' as analyzing conversation-level data.
+#' 
+#' @param verbose A logical that determines whether to print periodic progress
+#' updates.
 #'
-#' @return Percentage of users, equal to or less than 1 (read: 100%) and zero 
-#' within the requested conversation that are estimated by botornot to be a bot.
+#' @return Proportion of users within the requested conversation that are 
+#' estimated by botometer to be bots.
 #' 
 #' When \code{user_level} is set to \code{TRUE}, the value returned is the percentage of
 #' users within the conversation that are estimated to be bots. When
@@ -36,7 +39,7 @@
 
 # Introduce the function
 
-botscan <- function(x, th = 0.899, user_level = FALSE, verbose = TRUE) {
+botscan <- function(x, threshold = 0.899, user_level = FALSE, verbose = TRUE) {
   
   tweets <- rtweet::search_tweets(x, n = 1000, include_rts = FALSE)
 
@@ -79,23 +82,23 @@ botscan <- function(x, th = 0.899, user_level = FALSE, verbose = TRUE) {
   
   # Check scores against given threshold
   
-  nbots <- sum(df_userbots$cap.universal > th)
+  nbots <- sum(df_userbots$cap.universal > threshold)
   
   # Filter out accounts that fall below the given threshold
   
   bots <- dplyr::filter(df_userbots, (df_userbots$cap.universal > th))
   
-  # Return what percentage of users in the search are estimated to be bots
-  # according to the given threshold
+  # Return the proportion of users in the search estimated to be bots
+  # (according to the given threshold)
   
   if(user_level) {
   
     n <- length(unique(tweets$screen_name))
     
-    return(nbots/n)
+    return(nbots / n)
     
-  # Return what percentage of tweets in the search were authored by suspected
-  # bots according to the given threshold
+  # Return the proportion of tweets in the search that were authored by suspected
+  # bots (according to the given threshold)
   
   } else {
     
