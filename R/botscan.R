@@ -12,14 +12,14 @@
 #' @param n_tweets A number representing how many tweets to extract.
 #' 
 #' @param retweets A logical specifying whether to include retweets in 
-#' the set of tweets to be extracted.  Default is set to \code{FALSE}.
+#' the set of tweets to be extracted.  Defaults to \code{FALSE}.
 #'
 #' @param threshold A number between zero and one that determines which botornot 
 #' probability threshold to return. Default is set at 0.899. Only users estimated to be 
 #' more likely than the threshold provided will be regarded as a bot.
 #' 
 #' @param user_level A logical that determines whether to analyze
-#' conversation-level or user-level data. Default is set to \code{FALSE}, understood
+#' conversation-level or user-level data. Defaults to \code{FALSE}, understood
 #' as analyzing conversation-level data.
 #' 
 #' @param verbose A logical that determines whether to print periodic progress
