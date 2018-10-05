@@ -27,7 +27,7 @@ This package connects <code>botometer</code> to <code>rtweet</code>. As a result
 previously acquired authentication from Twitter and instructions to do that 
 [can be found here](http://rtweet.info/articles/auth.html).
 
-You will also need to install the latest version of Python, as botscan access Python-based botometer.
+You will also need to install the latest version of Python, as botscan accesses Python-based botometer.
 
 ## Usage
 
@@ -36,7 +36,11 @@ There are two functions currently live for botscan.
 To begin, the user must first enter the following code, inserting their keys where appropriate:
 
 ```{setup instructions, eval = FALSE}
-bom <- setup_botscan("YourMashapeKey", "YourTwitterConsumerKey", "YourTwitterConsumerSecret", "YourTwitterAccessToken", "YourTwitterAccessTokenSecret")
+bom <- setup_botscan("YourMashapeKey", 
+                     "YourTwitterConsumerKey", 
+                     "YourTwitterConsumerSecret", 
+                     "YourTwitterAccessToken", 
+                     "YourTwitterAccessTokenSecret")
 ```
 
 Next, the fun begin with ```botscan```.
@@ -44,17 +48,12 @@ Next, the fun begin with ```botscan```.
 Its first argument takes any Twitter query, complete with boolean operators if
 desired, surrounded by quotation marks.
 
-The second argument takes a number, less than one, that represents the desired 
-threshold at which an account should be considered a bot. This argument's 
-default is .899, understood as any account that is more than 89.9 percent 
-likely to be a bot should be considered a bot.
+The next two arguments specify the number of tweets to extract and whether to
+include retweets.  The fourth argument takes a number, less than one, that represents the desired threshold at which an account should be considered a bot. The default is .899, understood as any account that is more than 89.9 percent likely to be a bot should be considered a bot.
 
-The third argument allows the user to toggle between user-level and
-conversation-level data. This argument's default is set to conversation-level
-data, understood as what percentage of the queried conversation is bot-related.
-If <code>user_level</code> is set to <code>TRUE</code>, <code>botscan</code> 
-will return user-level data, understood as what percentage of the queried 
-conversation's authors are estimated to be bots.
+The next argument allows the user to toggle between user-level and
+conversation-level summaries.  The default is set to conversation-level
+data, understood as the proportion of the queried conversation that is bot-related.  If <code>user_level</code> is set to <code>TRUE</code>, <code>botscan</code> will return user-level data, understood to be the proportion of the queried conversation's authors that are estimated to be bots.
 
 ```{r usage, eval = FALSE}
 ## load botscan
@@ -81,14 +80,9 @@ botscan("rstats", user_level = TRUE)
 
 This process takes some time, as botscan is currently built on a loop of botometer. 
 Efforts to mainstream this process are set as future goals. A standard pull of
-tweets via botscan can take anywhere from fifteen to an hour or more.
+tweets via <code>botscan</code> can take anywhere from fifteen minutes to an hour or more.
 
 Twitter rate limits cap the number of search results returned to 18,000 every 
 15 minutes. Thus, excessive use of <code>botscan</code> in a short amount of 
-time may result in a warning and inability to pull results. In this event, 
-simply wait 15 minutes and try again.
-
-## Notes
-
-*In an effort to avoid the Twitter rate limit cap, <code>botscan</code> limits 
-searches to 1000 results.
+time may result in a warning and inability to pull results.  In this event, 
+simply wait 15 minutes and try again.  In an effort to avoid the Twitter rate limit cap, <code>botscan</code> defaults to returning 1000 results.
