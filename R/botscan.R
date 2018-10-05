@@ -11,6 +11,9 @@
 #' 
 #' @param n_tweets A number representing how many tweets to extract.
 #' 
+#' @param retweets A logical specifying whether to include retweets in 
+#' the set of tweets to be extracted.  Default is set to \code{FALSE}.
+#'
 #' @param threshold A number between zero and one that determines which botornot 
 #' probability threshold to return. Default is set at 0.899. Only users estimated to be 
 #' more likely than the threshold provided will be regarded as a bot.
@@ -39,10 +42,10 @@
 #' 
 #' @export
 
-botscan <- function(x, n_tweets = 1000, threshold = 0.899, user_level = FALSE, 
-                    verbose = TRUE) {
+botscan <- function(x, n_tweets = 1000, retweets = FALSE, threshold = 0.899, 
+                    user_level = FALSE, verbose = TRUE) {
   
-  tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = FALSE)
+  tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
 
   # Take the usernames and turn them into a vector
   
