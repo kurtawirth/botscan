@@ -100,10 +100,6 @@ botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshol
   
   assign("df", df_userbots, envir=globalenv())
   
-  # Check scores against given threshold
-  
-  nbots <- sum(df_userbots$cap.universal > threshold)
-  
   # Filter out accounts that fall below the given threshold
   
   bots <- dplyr::filter(df_userbots, (df_userbots$cap.universal > threshold))
@@ -113,6 +109,13 @@ botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshol
   
   if(user_level) {
   
+    # Check scores against given threshold
+    
+    nbots <- sum(
+      (tweets$screen_name %in% bots$user.screen_name) &
+        (df_userbots$cap.universal > threshold)
+    )
+    
     n <- length(unique(tweets$screen_name))
     
     return(nbots / n)
