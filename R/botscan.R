@@ -42,10 +42,18 @@
 #' 
 #' @export
 
-botscan <- function(x, n_tweets = 1000, retweets = FALSE, threshold = 0.899, 
-                    user_level = FALSE, verbose = TRUE) {
+botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshold = 0.899, 
+                    user_level = FALSE, search = FALSE, parse = TRUE, verbose = TRUE) {
   
-  tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
+  if(search) {
+    
+    tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
+  
+  } else {
+    
+    tweets <- rtweet::stream_tweets(x, timeout = timeout, parse = parse)
+    
+  }
 
   # Take the usernames and turn them into a vector
   
