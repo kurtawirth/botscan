@@ -23,7 +23,7 @@
 #' consumer_secret, access_token, and access_token_secret}
 #'
 #' @examples
-#' \dontrun{setup_botscan("a", "b", "c", "d", "e")}
+#' \dontrun{bom <- setup_botscan("a", "b", "c", "d", "e")}
 #' 
 #' # The above example fails, since each key, secret, or token must be created
 #' # by the user via ...

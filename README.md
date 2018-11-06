@@ -1,15 +1,12 @@
 botscan
 ================
 Kurt Wirth
-2018-10-04
+2018-11-06
 
-A package extending the capability of
-[botometer](https://github.com/IUNetSci/botometer-python) by measuring
-suspected bot activity in any given Twitter query. This README is
-derived from Matt Kearney’s excellent
-[rtweet](\(https://github.com/mkearney/rtweet\)) documentation.
+A package extending the capability of [botometer](https://github.com/IUNetSci/botometer-python) by measuring suspected bot activity in any given Twitter query. This README is derived from Matt Kearney's excellent [rtweet]((https://github.com/mkearney/rtweet)) documentation.
 
-## Install
+Install
+-------
 
 Install from GitHub with the following code:
 
@@ -17,24 +14,19 @@ Install from GitHub with the following code:
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
-devtools::install_github("mkearney/botrnot")
 devtools::install_github("kurtawirth/botscan")
 ```
 
-This package connects <code>botometer</code> to <code>rtweet</code>. As
-a result, each user must have previously acquired authentication from
-Twitter and instructions to do that [can be found
-here](http://rtweet.info/articles/auth.html).
+This package connects <code>botometer</code> to <code>rtweet</code>. As a result, each user must have previously acquired authentication from Twitter and instructions to do that [can be found here](http://rtweet.info/articles/auth.html).
 
-You will also need to install the latest version of Python, as botscan
-accesses Python-based botometer.
+Users will also need to install the latest version of Python, as botscan accesses Python-based <code>botometer</code>, as well as acquiring a [Mashape key](https://market.mashape.com/OSoMe/botometer). Doing so requires a Mashape account. BotOMeter's default rate limit is 2,000 inquiries per day, so users are strongly encouraged to sign up for a (free) BotOMeter Pro key. Instructions to do that [can be found here](https://market.mashape.com/OSoMe/botometer-pro/pricing).
 
-## Usage
+Usage
+-----
 
 There are two functions currently live for botscan.
 
-To begin, the user must first enter the following code, inserting their
-keys where appropriate:
+To begin, the user must first enter the following code, inserting their keys where appropriate:
 
 ``` setup
 bom <- setup_botscan("YourMashapeKey", 
@@ -44,25 +36,21 @@ bom <- setup_botscan("YourMashapeKey",
                      "YourTwitterAccessTokenSecret")
 ```
 
-Next, the fun begin with `botscan`.
+Currently, this must be done at the start of every session.
 
-Its first argument takes any Twitter query, complete with boolean
-operators if desired, surrounded by quotation marks.
+Next, the fun begins with <code>botscan</code>.
 
-The next two arguments specify the number of tweets to extract and
-whether to include retweets. The fourth argument takes a number, less
-than one, that represents the desired threshold at which an account
-should be considered a bot. The default is .899, understood as any
-account that is more than 89.9 percent likely to be a bot should be
-considered a bot.
+Its first argument takes any Twitter query, complete with boolean operators if desired, surrounded by quotation marks.
 
-The next argument allows the user to toggle between user-level and
-conversation-level summaries. The default is set to conversation-level
-data, understood as the proportion of the queried conversation that is
-bot-related. If <code>user\_level</code> is set to <code>TRUE</code>,
-<code>botscan</code> will return user-level data, understood to be the
-proportion of the queried conversation’s authors that are estimated to
-be bots.
+The next argument determines how long an open stream of tweets will be collected, with a default of 30 seconds. In order to gather a specific volume of tweets, it is suggested that the user run a small initial test to determine a rough rate of tweets for the given query. If the user prefers to use Twitter's Search API, the next argument allows the user to specify the number of tweets to extract.
+
+The fourth argument determines whether retweets will be included if using the Search API and the fifth takes a number, less than one, that represents the desired threshold at which an account should be considered a bot. The default is .430, a reliable threshold as described by BotOMeter's creator [here](http://www.pewresearch.org/fact-tank/2018/04/19/qa-how-pew-research-center-identified-bots-on-twitter/).
+
+The sixth argument allows the user to toggle between user-level and conversation-level summaries. The default is set to conversation-level data, understood as the proportion of the queried conversation that is bot-related. If <code>user\_level</code> is set to <code>TRUE</code>, <code>botscan</code> will return user-level data, understood to be the proportion of the queried conversation's authors that are estimated to be bots.
+
+The seventh argument allows the user to toggle between Twitter's Search and Streaming APIs. The default is set to using the Streaming API, as it is unfiltered by Twitter and thus produces more accurate data. Search API data is filtered to eliminate low quality content, thus negatively impacting identification of bot accounts.
+
+The eighth argument allows the user to opt out of auto-parsing of data, primarily useful when dealing with large volumes of data. The ninth and final argument defaults to keeping the user informed about the progress of the tool in gathering and processing data with the <code>verbose</code> package but can be toggled off.
 
 ``` r
 ## load botscan
@@ -74,27 +62,23 @@ botscan("#rstats")
 
 ## Result is percentage - in this case, 16.42276%.
 
-## If desired, choose the threshold
-botscan("#rstats", threshold = .995)
+## If desired, choose the stream time and threshold
+botscan("#rstats", timeout = 60, threshold = .995)
 #> [1] 0.02398524
+
+## Alternatively, choose to use Twitter's Search API and options associated with it.
+botscan("#rstats", n_tweets = 1500, retweets = TRUE, search = TRUE, threshold = .995)
+#> [1] 0.03270932
 
 ## Result is percentage - in this case, 2.398524%.
 
 ##If desired, scan only users rather than the conversation as a whole.
-botscan("rstats", user_level = TRUE)
+botscan("#rstats", user_level = TRUE)
 #> [1] 0.1505155
 
 ## Result is percentage - in this case, 15.05155%.
 ```
 
-This process takes some time, as botscan is currently built on a loop of
-botometer. Efforts to mainstream this process are set as future goals. A
-standard pull of tweets via <code>botscan</code> can take anywhere from
-fifteen minutes to an hour or more.
+This process takes some time, as botscan is currently built on a loop of BotOMeter. Efforts to mainstream this process are set as future goals. A standard pull of tweets via <code>botscan</code> processes approximately 11 to 12 accounts per minute in addition to the initial tweet streaming.
 
-Twitter rate limits cap the number of search results returned to 18,000
-every 15 minutes. Thus, excessive use of <code>botscan</code> in a short
-amount of time may result in a warning and inability to pull results. In
-this event, simply wait 15 minutes and try again. In an effort to avoid
-the Twitter rate limit cap, <code>botscan</code> defaults to returning
-1000 results.
+Twitter rate limits cap the number of Search results returned to 18,000 every 15 minutes. Thus, excessive use of <code>botscan</code> in a short amount of time may result in a warning and inability to pull results. In this event, simply wait 15 minutes and try again. In an effort to avoid the Twitter rate limit cap, <code>botscan</code> defaults to returning 1000 results when <code>search = TRUE</code>.
