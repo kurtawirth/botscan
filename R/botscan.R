@@ -42,7 +42,7 @@
 #' 
 #' @export
 
-botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshold = 0.899, 
+botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshold = 0.430, 
                     user_level = FALSE, search = FALSE, parse = TRUE, verbose = TRUE) {
   
   # If "search" is TRUE, then use Twitter's Search API
