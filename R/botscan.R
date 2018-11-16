@@ -59,9 +59,9 @@ botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshol
     
   }
 
-  # Take the usernames and turn them into a vector
+  # Store unique usernames as a vector:
   
-  users <- tweets$screen_name
+  users_unique <- unique(tweets$screen_name)
   
   # Initialize user data list:
   
@@ -73,17 +73,20 @@ botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshol
   
   # Run these usernames through botcheck via a loop
   
-  for(user_idx in 1:length(users)){
+  for(user_idx in 1:length(users_unique)){
     
     if(verbose == TRUE){
+      
       if(user_idx %% 100 == 0){
-        cat("Checking user account ", users[user_idx], ", number ", user_idx, "\n", sep = "")
+        cat("Checking user account ", users_unique[user_idx], 
+            ", number ", user_idx, "\n", sep = "")
       }
+      
     }
     
     tryCatch({
       
-      tmp_userlist <- bom$check_account(users[user_idx])
+      tmp_userlist <- bom$check_account(users_unique[user_idx])
     
       tmp_user_df <- as.data.frame(tmp_userlist)
     
@@ -96,9 +99,14 @@ botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshol
 
   }
   
+  # Replicate results from unique screen names to embody all screen names:
+  # (Also, adds the variables from tweets to the df_userbots)
+  
+  df_userbots <- left_join(df_userbots, tweets, by = c("user.screen_name" = "screen_name"))
+  
   # Assign resulting dataframe to global environment
   
-  assign("df", df_userbots, envir=globalenv())
+  assign("df", df_userbots, envir = globalenv())
   
   # Filter out accounts that fall below the given threshold
   
