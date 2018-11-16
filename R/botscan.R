@@ -9,6 +9,8 @@
 #'
 #' @param x A string representing a Twitter search query, in quotation marks.
 #' 
+#' @param timeout A number representing ...
+#' 
 #' @param n_tweets A number representing how many tweets to extract.
 #' 
 #' @param retweets A logical specifying whether to include retweets in 
@@ -21,6 +23,12 @@
 #' @param user_level A logical that determines whether to analyze
 #' conversation-level or user-level data. Defaults to \code{FALSE}, understood
 #' as analyzing conversation-level data.
+#' 
+#' @param search A logical indicating whether the search API or the streaming API 
+#' is queried.  Defaults to \code{FALSE}, using the streaming API.
+#' 
+#' @param parse A logical specifying whether to ... when querying the streaming API.
+#' Defaults to \code{TRUE}, indicating ...
 #' 
 #' @param verbose A logical that determines whether to print periodic progress
 #' updates.
