@@ -9,26 +9,31 @@
 #'
 #' @param x A string representing a Twitter search query, in quotation marks.
 #' 
-#' @param timeout A number representing ...
-#' 
-#' @param n_tweets A number representing how many tweets to extract.
-#' 
-#' @param retweets A logical specifying whether to include retweets in 
-#' the set of tweets to be extracted.  Defaults to \code{FALSE}.
+#' @param timeout A number representing the number of seconds the user wishes to
+#' stream tweets on the given search term. This is only applied when using the
+#' default STREAM Twitter API. Default is 30 seconds.
 #'
 #' @param threshold A number between zero and one that determines which botornot 
-#' probability threshold to return. Default is set at 0.899. Only users estimated to be 
-#' more likely than the threshold provided will be regarded as a bot.
+#' probability threshold to return. Default is set at 0.43. Only users estimated 
+#' to be more likely than the threshold provided will be regarded as a bot.
 #' 
 #' @param user_level A logical that determines whether to analyze
 #' conversation-level or user-level data. Defaults to \code{FALSE}, understood
 #' as analyzing conversation-level data.
 #' 
-#' @param search A logical indicating whether the search API or the streaming API 
-#' is queried.  Defaults to \code{FALSE}, using the streaming API.
+#' @param stream A logical indicating whether the streaming API or the search API 
+#' is queried.  Defaults to \code{TRUE}, using the streaming API.
 #' 
-#' @param parse A logical specifying whether to ... when querying the streaming API.
-#' Defaults to \code{TRUE}, indicating ...
+#' @param n_tweets A number representing how many tweets to extract.
+#' 
+#' @param retweets A logical specifying whether to include retweets in 
+#' the set of tweets to be extracted.  Defaults to \code{FALSE}.
+#' 
+#' @param parse A logical specifying whether to automatically parse data into
+#' structured data when querying the streaming API. Defaults to \code{TRUE}, 
+#' making results more usable for most users. Setting to \code{FALSE} will
+#' produce less structured data but allow for faster processing for very large
+#' data projects.
 #' 
 #' @param verbose A logical that determines whether to print periodic progress
 #' updates.
@@ -50,20 +55,21 @@
 #' 
 #' @export
 
-botscan <- function(x, timeout = 30, n_tweets = 1000, retweets = FALSE, threshold = 0.430, 
-                    user_level = FALSE, search = FALSE, parse = TRUE, verbose = TRUE) {
+botscan <- function(x, timeout = 30, threshold = 0.430, user_level = FALSE, 
+                    stream = TRUE, n_tweets = 1000, retweets = FALSE, parse = TRUE, 
+                    verbose = TRUE) {
   
   # If "search" is TRUE, then use Twitter's Search API
   
-  if(search) {
+  if(stream) {
     
-    tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
+    tweets <- rtweet::stream_tweets(x, timeout = timeout, parse = parse)
   
   # If "search" if FALSE (default), then use Twitter's Streaming API
     
     } else {
     
-    tweets <- rtweet::stream_tweets(x, timeout = timeout, parse = parse)
+    tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
     
   }
 
