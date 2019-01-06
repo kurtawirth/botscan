@@ -75,7 +75,7 @@ botscan <- function(x, timeout = 30, threshold = 0.430, user_level = FALSE,
 
   # Store unique usernames as a vector:
   
-  users_unique <- unique(tweets$screen_name)
+  users_unique <- as.character(unique(tweets$screen_name))
   
   # Initialize user data list:
   
