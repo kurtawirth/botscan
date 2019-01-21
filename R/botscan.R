@@ -126,7 +126,7 @@ botscan <- function(x, timeout = 30, threshold = 0.430, user_level = FALSE,
   
   # Filter out accounts that fall below the given threshold
   
-  bots <- dplyr::filter(df_userbots, (df_userbots$cap.universal > threshold))
+  bots <- dplyr::filter(df_userbots, cap.universal > threshold)
   
   # Return the proportion of users in the search estimated to be bots
   # (according to the given threshold)
