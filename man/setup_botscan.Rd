@@ -32,7 +32,7 @@ Takes a Twitter query and produces the percentage of users within that
 conversation that are likely to be bots.
 }
 \examples{
-\dontrun{setup_botscan("a", "b", "c", "d", "e")}
+\dontrun{bom <- setup_botscan("a", "b", "c", "d", "e")}
 
 # The above example fails, since each key, secret, or token must be created
 # by the user via ...

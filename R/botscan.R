@@ -17,10 +17,6 @@
 #' probability threshold to return. Default is set at 0.43. Only users estimated 
 #' to be more likely than the threshold provided will be regarded as a bot.
 #' 
-#' @param user_level A logical that determines whether to analyze
-#' conversation-level or user-level data. Defaults to \code{FALSE}, understood
-#' as analyzing conversation-level data.
-#' 
 #' @param stream A logical indicating whether the streaming API or the search API 
 #' is queried.  Defaults to \code{TRUE}, using the streaming API.
 #' 
@@ -55,8 +51,8 @@
 #' 
 #' @export
 
-botscan <- function(x, timeout = 30, threshold = 0.430, user_level = FALSE, 
-                    stream = TRUE, n_tweets = 1000, retweets = FALSE, parse = TRUE, 
+botscan <- function(x, timeout = 30, threshold = 0.430, stream = TRUE, 
+                    n_tweets = 1000, retweets = FALSE, parse = TRUE, 
                     verbose = TRUE) {
   
   # If "stream" is TRUE (default), then use Twitter's Streaming API
@@ -128,31 +124,30 @@ botscan <- function(x, timeout = 30, threshold = 0.430, user_level = FALSE,
   
   bots <- dplyr::filter(df_userbots, cap.universal > threshold)
   
-  # Return the proportion of users in the search estimated to be bots
+  # Calculate the proportion of users in the search estimated to be bots
   # (according to the given threshold)
   
-  if(user_level) {
+  # Check scores against given threshold
   
-    # Check scores against given threshold
-    
-    nbots <- sum(
-      (tweets$screen_name %in% bots$user.screen_name) &
-        (df_userbots$cap.universal > threshold)
+  nbots <- sum(
+    (tweets$screen_name %in% bots$user.screen_name) &
+      (df_userbots$cap.universal > threshold)
     )
     
-    n <- length(unique(tweets$screen_name))
+  n <- length(unique(tweets$screen_name))
+  
+  prop_user_level_bots <- (nbots / n)
     
-    return(nbots / n)
-    
-  # Return the proportion of tweets in the search that were authored by suspected
+  # Calculate proportion of tweets in the search that were authored by suspected
   # bots (according to the given threshold)
   
-  } else {
-    
-    n <- length(tweets$screen_name)
-    
-    return(sum(tweets$screen_name %in% bots$user.screen_name) / n)
-
-  }
+  n <- length(tweets$screen_name)
+  
+  prop_convo_level_bots <- (sum(tweets$screen_name %in% bots$user.screen_name) / n)
+  
+  
+  return(list(df = df_userbots, 
+              prop_user_level_bots = prop_user_level_bots,
+              prop_convo_level_bots = prop_convo_level_bots))
 
 }

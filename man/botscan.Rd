@@ -4,24 +4,33 @@
 \alias{botscan}
 \title{botscan}
 \usage{
-botscan(x, n_tweets = 1000, retweets = FALSE, threshold = 0.899,
-  user_level = FALSE, verbose = TRUE)
+botscan(x, timeout = 30, threshold = 0.43, stream = TRUE,
+  n_tweets = 1000, retweets = FALSE, parse = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{x}{A string representing a Twitter search query, in quotation marks.}
 
+\item{timeout}{A number representing the number of seconds the user wishes to
+stream tweets on the given search term. This is only applied when using the
+default STREAM Twitter API. Default is 30 seconds.}
+
+\item{threshold}{A number between zero and one that determines which botornot 
+probability threshold to return. Default is set at 0.43. Only users estimated 
+to be more likely than the threshold provided will be regarded as a bot.}
+
+\item{stream}{A logical indicating whether the streaming API or the search API 
+is queried.  Defaults to \code{TRUE}, using the streaming API.}
+
 \item{n_tweets}{A number representing how many tweets to extract.}
 
 \item{retweets}{A logical specifying whether to include retweets in 
-the set of tweets to be extracted.  Default is set to \code{FALSE}.}
+the set of tweets to be extracted.  Defaults to \code{FALSE}.}
 
-\item{threshold}{A number between zero and one that determines which botornot 
-probability threshold to return. Default is set at 0.899. Only users estimated to be 
-more likely than the threshold provided will be regarded as a bot.}
-
-\item{user_level}{A logical that determines whether to analyze
-conversation-level or user-level data. Default is set to \code{FALSE}, understood
-as analyzing conversation-level data.}
+\item{parse}{A logical specifying whether to automatically parse data into
+structured data when querying the streaming API. Defaults to \code{TRUE}, 
+making results more usable for most users. Setting to \code{FALSE} will
+produce less structured data but allow for faster processing for very large
+data projects.}
 
 \item{verbose}{A logical that determines whether to print periodic progress
 updates.}
