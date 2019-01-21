@@ -59,13 +59,13 @@ botscan <- function(x, timeout = 30, threshold = 0.430, user_level = FALSE,
                     stream = TRUE, n_tweets = 1000, retweets = FALSE, parse = TRUE, 
                     verbose = TRUE) {
   
-  # If "search" is TRUE, then use Twitter's Search API
+  # If "stream" is TRUE (default), then use Twitter's Streaming API
   
   if(stream) {
     
     tweets <- rtweet::stream_tweets(x, timeout = timeout, parse = parse)
   
-  # If "search" if FALSE (default), then use Twitter's Streaming API
+  # If "stream" if FALSE, then use Twitter's Search API
     
     } else {
     
@@ -82,7 +82,9 @@ botscan <- function(x, timeout = 30, threshold = 0.430, user_level = FALSE,
   df_userbots <- data.frame()
   
   if(verbose == TRUE){
+    
     cat("Starting user account checking\n")
+  
   } 
   
   # Run these usernames through botcheck via a loop
