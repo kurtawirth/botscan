@@ -116,10 +116,6 @@ botscan <- function(x, timeout = 30, threshold = 0.430, stream = TRUE,
   
   df_userbots <- left_join(df_userbots, tweets, by = c("user.screen_name" = "screen_name"))
   
-  # Assign resulting dataframe to global environment
-  
-  assign("df", df_userbots, envir = globalenv())
-  
   # Filter out accounts that fall below the given threshold
   
   bots <- dplyr::filter(df_userbots, cap.universal > threshold)
