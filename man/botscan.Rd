@@ -36,8 +36,12 @@ data projects.}
 updates.}
 }
 \value{
-Proportion of users within the requested conversation that are 
-estimated by botometer to be bots.
+A list of length 3: \enumerate{
+   \item Dataframe including all data. This includes original data for each tweet as
+         well as BotOMeter scores for each.
+   \item User-level estimate for the given search.
+   \item Conversation-level estimate for the given search.
+}
 
 When \code{user_level} is set to \code{TRUE}, the value returned is the percentage of
 users within the conversation that are estimated to be bots. When

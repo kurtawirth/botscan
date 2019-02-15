@@ -53,6 +53,8 @@
 #' ##The above examples fail unless you have created and installed Twitter 
 #' ##tokens, per instructions provided at http://rtweet.info/articles/auth.html.
 #' 
+#' @importFrom magrittr "%>%"
+#' 
 #' @export
 
 botscan <- function(x, timeout = 30, threshold = 0.430, stream = TRUE, 

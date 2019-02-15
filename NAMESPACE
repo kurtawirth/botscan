@@ -2,3 +2,4 @@
 
 export(botscan)
 export(setup_botscan)
+importFrom(magrittr,"%>%")
