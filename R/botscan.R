@@ -5,6 +5,8 @@
 #' Takes a Twitter query and produces the proportion of users within that
 #' conversation that are likely to be bots.
 #'
+#' To get a sample of tweets from the stream API, set \code{x = ""}.
+#'
 #' @author Kurt Wirth and Ryan T. Moore
 #'
 #' @param x A string representing a Twitter search query, in quotation marks.

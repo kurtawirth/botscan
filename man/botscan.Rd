@@ -54,6 +54,8 @@ Scans Twitter Conversations For Bots
 \details{
 Takes a Twitter query and produces the proportion of users within that
 conversation that are likely to be bots.
+
+To get a sample of tweets from the stream API, set \code{x = ""}.
 }
 \examples{
 \dontrun{botscan("#rtweets")}
