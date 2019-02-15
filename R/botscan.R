@@ -126,9 +126,7 @@ botscan <- function(x, timeout = 30, threshold = 0.430, stream = TRUE,
   # Check scores against given threshold
   
   nbots <- sum(
-    (tweets$screen_name %in% bots$user.screen_name) &
-      (df_userbots$cap.universal > threshold)
-    )
+    unique(tweets$screen_name) %in% bots$user.screen_name)
     
   n <- length(unique(tweets$screen_name))
   
