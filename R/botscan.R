@@ -118,7 +118,8 @@ botscan <- function(x, timeout = 30, threshold = 0.430, stream = TRUE,
   # Replicate results from unique screen names to embody all screen names:
   # (Also, adds the variables from tweets to the df_userbots)
   
-  df_userbots <- left_join(df_userbots, tweets, by = c("user.screen_name" = "screen_name"))
+  df_userbots <- dplyr::left_join(df_userbots, tweets, 
+                                  by = c("user.screen_name" = "screen_name"))
   
   # Filter out accounts that fall below the given threshold
   
