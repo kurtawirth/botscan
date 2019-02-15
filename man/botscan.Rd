@@ -36,17 +36,14 @@ data projects.}
 updates.}
 }
 \value{
-A list of length 3: \enumerate{
-   \item Dataframe including all data. This includes original data for each tweet as
-         well as BotOMeter scores for each.
-   \item User-level estimate for the given search.
-   \item Conversation-level estimate for the given search.
+A list of length 3: \itemize{
+   \item \code{df}  Dataframe including all data. This includes original data 
+   for each tweet as well as BotOMeter scores for each.
+   \item \code{prop_user_level_bots}  User-level estimate of proportion of 
+   bots among accounts in the searched conversation.
+   \item \code{prop_convo_level_bots}  Conversation-level estimate of the 
+   proportion of tweets in the searched conversation that are by bots.
 }
-
-When \code{user_level} is set to \code{TRUE}, the value returned is the percentage of
-users within the conversation that are estimated to be bots. When
-\code{user_level} is set to \code{FALSE}, the value returned is the percentage of the
-conversation that is estimated to be authored by bots.
 }
 \description{
 Scans Twitter Conversations For Bots
