@@ -2,11 +2,6 @@
 #'
 #' Scans Twitter Conversations For Bots
 #'
-#' Takes a Twitter query and produces the proportion of users within that
-#' conversation that are likely to be bots.
-#'
-#' To get a sample of tweets from the stream API, set \code{x = ""}.
-#'
 #' @author Kurt Wirth and Ryan T. Moore
 #'
 #' @param x A string representing a Twitter search query, in quotation marks.
@@ -19,8 +14,8 @@
 #' probability threshold to return. Default is set at 0.43. Only users estimated 
 #' to be more likely than the threshold provided will be regarded as a bot.
 #' 
-#' @param stream A logical indicating whether the streaming API or the search API 
-#' is queried.  Defaults to \code{TRUE}, using the streaming API.
+#' @param api A string specifying which Twitter API to collect data from, the 
+#' \code{"stream"} or \code{"search"} API.  Defaults to \code{"stream"}. 
 #' 
 #' @param n_tweets A number representing how many tweets to extract.
 #' 
@@ -36,6 +31,18 @@
 #' @param verbose A logical that determines whether to print periodic progress
 #' updates.
 #'
+#' @details 
+#' 
+#' \code{botscan()} takes a Twitter query and produces the proportion of the 
+#' conversation and the users within that conversation that are likely to be bots.
+#' 
+#' To get a sample of tweets from the stream API, set \code{x = ""}.
+#' 
+#' The \code{api} argument defaults to \code{"stream"}, using Twitter's 
+#' streaming API and collecting tweets which post after the function is 
+#' called.  The other option, \code{"search"}, uses Twitter's search API, 
+#' collecting tweets which posted before the function was called.
+#'
 #' @return A list of length 3: \itemize{
 #'    \item \code{df}  Dataframe including all data. This includes original data 
 #'    for each tweet as well as BotOMeter scores for each.
@@ -50,30 +57,39 @@
 #' \dontrun{botscan("#rtweets")}
 #' \dontrun{botscan("trump")}
 #' 
-#' ##The above examples fail unless you have created and installed Twitter 
-#' ##tokens, per instructions provided at http://rtweet.info/articles/auth.html.
+#' ## The above examples fail unless you have created and installed Twitter 
+#' ## tokens, per instructions provided at http://rtweet.info/articles/auth.html.
 #' 
 #' @importFrom magrittr "%>%"
 #' 
 #' @export
 
-botscan <- function(x, timeout = 30, threshold = 0.430, stream = TRUE, 
+botscan <- function(x, timeout = 30, threshold = 0.430, api = "stream", 
                     n_tweets = 1000, retweets = FALSE, parse = TRUE, 
                     verbose = TRUE) {
   
-  # If "stream" is TRUE (default), then use Twitter's Streaming API
+  # If api = "stream" (default), then use Twitter's Streaming API
   
-  if(stream) {
+  if(api == "stream") {
     
     tweets <- rtweet::stream_tweets(x, timeout = timeout, parse = parse)
   
-  # If "stream" if FALSE, then use Twitter's Search API
+  # If api = "search", then use Twitter's Search API
     
     } else {
-    
-    tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
-    
-  }
+      
+      if(api == "search") {
+        
+        tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
+        
+      } else {
+        
+        stop("Argument 'api' must be one of 'stream' or 'search'.  Please reset 
+             this argument and rerun botscan().")
+        
+      }
+      
+    }
 
   # Store unique usernames as a vector:
   

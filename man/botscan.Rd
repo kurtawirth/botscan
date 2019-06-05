@@ -4,7 +4,7 @@
 \alias{botscan}
 \title{botscan}
 \usage{
-botscan(x, timeout = 30, threshold = 0.43, stream = TRUE,
+botscan(x, timeout = 30, threshold = 0.43, api = "stream",
   n_tweets = 1000, retweets = FALSE, parse = TRUE, verbose = TRUE)
 }
 \arguments{
@@ -18,8 +18,8 @@ default STREAM Twitter API. Default is 30 seconds.}
 probability threshold to return. Default is set at 0.43. Only users estimated 
 to be more likely than the threshold provided will be regarded as a bot.}
 
-\item{stream}{A logical indicating whether the streaming API or the search API 
-is queried.  Defaults to \code{TRUE}, using the streaming API.}
+\item{api}{A string specifying which Twitter API to collect data from, the 
+\code{"stream"} or \code{"search"} API.  Defaults to \code{"stream"}.}
 
 \item{n_tweets}{A number representing how many tweets to extract.}
 
@@ -49,17 +49,22 @@ A list of length 3: \itemize{
 Scans Twitter Conversations For Bots
 }
 \details{
-Takes a Twitter query and produces the proportion of users within that
-conversation that are likely to be bots.
+\code{botscan()} takes a Twitter query and produces the proportion of the 
+conversation and the users within that conversation that are likely to be bots.
 
 To get a sample of tweets from the stream API, set \code{x = ""}.
+
+The \code{api} argument defaults to \code{"stream"}, using Twitter's 
+streaming API and collecting tweets which post after the function is 
+called.  The other option, \code{"search"}, uses Twitter's search API, 
+collecting tweets which posted before the function was called.
 }
 \examples{
 \dontrun{botscan("#rtweets")}
 \dontrun{botscan("trump")}
 
-##The above examples fail unless you have created and installed Twitter 
-##tokens, per instructions provided at http://rtweet.info/articles/auth.html.
+## The above examples fail unless you have created and installed Twitter 
+## tokens, per instructions provided at http://rtweet.info/articles/auth.html.
 
 }
 \author{
