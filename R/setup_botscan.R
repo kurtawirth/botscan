@@ -38,7 +38,9 @@ setup_botscan <- function(mashape_key, consumer_key, consumer_secret,
                            access_token = access_token,
                            access_token_secret = access_token_secret)
   
-  reticulate::source_python("inst/python/create_bom.py")
+  python_file_path <- system.file("python", "create_bom.py", package = "botscan")
+              
+  reticulate::source_python(python_file_path)
   
   bom <- create_bom(mashape_key, twitter_app_auth)
 
