@@ -16,6 +16,8 @@
 #'
 #' @export 
 
-install_botometer <- function(method = "auto", conda = "auto") {
-  reticulate::py_install("botometer", method = method, conda = conda)
+install_botometer <- function(method = "auto", conda = "auto"){
+  
+  reticulate::py_install("botometer", method = method, conda = conda, pip = TRUE)
+  
 }
