@@ -7,7 +7,7 @@
 #'
 #' @author Ryan T. Moore
 #'
-#' @param mashape_key A string representing the mashape key
+#' @param rapidapi_key A string representing the RapidAPI key
 #' 
 #' @param consumer_key A string representing the consumer key
 #' 
@@ -18,7 +18,7 @@
 #' @param access_token_secret A string representing the access token secret
 #' 
 #' @return A list of length two with components
-#' \item{mashape_key}{The mashape key}
+#' \item{rapidapi_key}{The RapidAPI key}
 #' \item{twitter_app_auth}{A list of length four, including the consumer_key, 
 #' consumer_secret, access_token, and access_token_secret}
 #'
@@ -30,7 +30,7 @@
 #' 
 #' @export
 
-setup_botscan <- function(mashape_key, consumer_key, consumer_secret, 
+setup_botscan <- function(rapidapi_key, consumer_key, consumer_secret, 
                           access_token, access_token_secret){
   
   twitter_app_auth <- list(consumer_key = consumer_key,
@@ -42,7 +42,7 @@ setup_botscan <- function(mashape_key, consumer_key, consumer_secret,
               
   reticulate::source_python(python_file_path)
   
-  bom <- create_bom(mashape_key, twitter_app_auth)
+  bom <- create_bom(rapidapi_key, twitter_app_auth)
 
   return(bom)
   
