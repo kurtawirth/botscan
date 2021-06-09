@@ -55,7 +55,7 @@
 #'
 #' @examples
 #' \dontrun{botscan("#rtweets")}
-#' \dontrun{botscan("trump")}
+#' \dontrun{botscan("biden")}
 #' 
 #' ## The above examples fail unless you have created and installed Twitter 
 #' ## tokens, per instructions provided at http://rtweet.info/articles/auth.html.
@@ -101,7 +101,7 @@ botscan <- function(x, timeout = 30, threshold = 0.430, api = "stream",
   
   if(verbose == TRUE){
     
-    cat("Starting user account checking\n")
+    cat("Starting user account checking,", length(users_unique), "accounts.\n")
   
   } 
   
@@ -137,7 +137,7 @@ botscan <- function(x, timeout = 30, threshold = 0.430, api = "stream",
   # (Also, adds the variables from tweets to the df_userbots)
   
   df_userbots <- dplyr::left_join(df_userbots, tweets, 
-                                  by = c("user.screen_name" = "screen_name"))
+                                  by = c("user.user_data.screen_name" = "screen_name"))
   
   # Filter out accounts that fall below the given threshold
   
@@ -149,7 +149,7 @@ botscan <- function(x, timeout = 30, threshold = 0.430, api = "stream",
   # Check scores against given threshold
   
   nbots <- sum(
-    unique(tweets$screen_name) %in% bots$user.screen_name)
+    unique(tweets$screen_name) %in% bots$user.user_data.screen_name)
     
   n <- length(unique(tweets$screen_name))
   
@@ -160,7 +160,7 @@ botscan <- function(x, timeout = 30, threshold = 0.430, api = "stream",
   
   n <- length(tweets$screen_name)
   
-  prop_convo_level_bots <- (sum(tweets$screen_name %in% bots$user.screen_name) / n)
+  prop_convo_level_bots <- (sum(tweets$screen_name %in% bots$user.user_data.screen_name) / n)
   
   
   return(list(df = df_userbots, 
