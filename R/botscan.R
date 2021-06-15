@@ -64,32 +64,37 @@
 #' 
 #' @export
 
-botscan <- function(x, timeout = 30, threshold = 0.430, api = "stream", 
+botscan <- function(x, external_data = "NA", timeout = 30, threshold = 0.430, api = "stream", 
                     n_tweets = 1000, retweets = FALSE, parse = TRUE, 
                     verbose = TRUE) {
   
-  # If api = "stream" (default), then use Twitter's Streaming API
+  # If external_data is provided, use that data. Otherwise, find data.
   
-  if(api == "stream") {
-    
-    tweets <- rtweet::stream_tweets(x, timeout = timeout, parse = parse)
+  if(external_data == "NA") {
   
-  # If api = "search", then use Twitter's Search API
+    # If api = "stream" (default), then use Twitter's Streaming API
     
-    } else {
+    if(api == "stream") {
       
-      if(api == "search") {
-        
-        tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
-        
+      tweets <- rtweet::stream_tweets(x, timeout = timeout, parse = parse)
+    
+    # If api = "search", then use Twitter's Search API
+      
       } else {
         
-        stop("Argument 'api' must be one of 'stream' or 'search'.  Please reset 
-             this argument and rerun botscan().")
+        if(api == "search") {
+          
+          tweets <- rtweet::search_tweets(x, n = n_tweets, include_rts = retweets)
+          
+        } else {
+          
+          stop("Argument 'api' must be one of 'stream' or 'search'.  Please 
+          reset this argument and rerun botscan().")
+          
+        }
         
       }
-      
-    }
+  } else {tweets = external_data}
 
   # Store unique usernames as a vector:
   
