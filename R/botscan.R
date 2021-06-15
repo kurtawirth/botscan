@@ -64,7 +64,7 @@
 #' 
 #' @export
 
-botscan <- function(x, external_data = "NA", timeout = 30, threshold = 0.430, api = "stream", 
+botscan <- function(x = "#rstats", external_data = "NA", timeout = 30, threshold = 0.430, api = "stream", 
                     n_tweets = 1000, retweets = FALSE, parse = TRUE, 
                     verbose = TRUE) {
   
