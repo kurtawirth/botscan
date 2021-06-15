@@ -70,7 +70,7 @@ botscan <- function(x = "#rstats", external_data = "NA", timeout = 30, threshold
   
   # If external_data is provided, use that data. Otherwise, find data.
   
-  if(external_data == "NA") {
+  if(length(external_data) == 1) {
   
     # If api = "stream" (default), then use Twitter's Streaming API
     
