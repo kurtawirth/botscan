@@ -94,6 +94,7 @@ botscan <- function(x = "#rstats", external_data = "NA", timeout = 30, threshold
         }
         
       }
+    
   } else {tweets = external_data}
 
   # Store unique usernames as a vector:
