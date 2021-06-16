@@ -1,12 +1,15 @@
 botscan
 ================
-Kurt Wirth
-2018-11-06
+Kurt Wirth and Ryan Moore
+2021-06-16
 
-A package extending the capability of [botometer](https://github.com/IUNetSci/botometer-python) by measuring suspected bot activity in any given Twitter query. This README is derived from Matt Kearney's excellent [rtweet]((https://github.com/mkearney/rtweet)) documentation.
+A package extending the capability of
+[botometer](https://github.com/IUNetSci/botometer-python) by measuring
+suspected bot activity in any given Twitter query. This README is
+derived from Matt Kearney’s excellent
+[rtweet]((https://github.com/mkearney/rtweet)) documentation.
 
-Install
--------
+## Install
 
 Install from GitHub with the following code:
 
@@ -17,21 +20,40 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("kurtawirth/botscan")
 ```
 
-This package connects <code>botometer</code> to <code>rtweet</code>. As a result, each user must have previously acquired authentication from Twitter and instructions to do that [can be found here](http://rtweet.info/articles/auth.html).
+This package connects <code>botometer</code> to <code>rtweet</code>. On
+first load, rtweet will request authentication in your default browser.
+Accept the connection, return to RStudio, and botscan will continue
+automatically.
 
-Users will also need to install the latest version of Python, as botscan accesses Python-based <code>botometer</code>, as well as acquiring a [Mashape key](https://market.mashape.com/OSoMe/botometer). Doing so requires a Mashape account. BotOMeter's default rate limit is 2,000 inquiries per day, so users are strongly encouraged to sign up for a (free) BotOMeter Pro key. Instructions to do that [can be found here](https://market.mashape.com/OSoMe/botometer-pro/pricing).
+Users will also need to install the latest version of Python and add it
+to the PATH upon installing when prompted, as botscan accesses
+Python-based <code>botometer</code>, as well as acquiring a [RapidAPI
+key](https://rapidapi.com/OSoMe/api/botometer-pro). Doing so requires a
+RapidAPI account. BotOMeter Pro is free and has a rate limit of 2,000
+inquiries per day. Alternatively, users can opt for the Ultra plan,
+which enables 17,280 inquires per day and costs $50/month. Plans can be
+chosen [here](https://rapidapi.com/OSoMe/api/botometer-pro/pricing).
 
-Usage
------
+## Usage
 
-There are two functions currently live for botscan.
+There are three functions currently live for botscan.
 
-To begin, the user must first enter the following code, inserting their keys where appropriate:
+To begin, the user must first enter the following code:
+
+``` install
+install_botometer()
+```
+
+If your Python has been added to your machine’s PATH as mentioned above,
+this function will install BotOMeter via <code>pip</code>.
+
+Next, a user must create a bom object in their environment with the
+following code, inserting their keys where appropriate:
 
 ``` setup
-bom <- setup_botscan("YourMashapeKey", 
-                     "YourTwitterConsumerKey", 
-                     "YourTwitterConsumerSecret", 
+bom <- setup_botscan("YourRapiAPIKey", 
+                     "YourTwitterConsumerAPIKey", 
+                     "YourTwitterConsumerAPISecretKey", 
                      "YourTwitterAccessToken", 
                      "YourTwitterAccessTokenSecret")
 ```
@@ -40,17 +62,47 @@ Currently, this must be done at the start of every session.
 
 Next, the fun begins with <code>botscan</code>.
 
-Its first argument takes any Twitter query, complete with boolean operators if desired, surrounded by quotation marks.
+Its first argument takes any Twitter query, complete with boolean
+operators if desired, surrounded by quotation marks.
 
-The next argument determines how long an open stream of tweets will be collected, with a default of 30 seconds. In order to gather a specific volume of tweets, it is suggested that the user run a small initial test to determine a rough rate of tweets for the given query. If the user prefers to use Twitter's Search API, the next argument allows the user to specify the number of tweets to extract.
+The second argument allows the user to provide external data in the form
+of any Twitter object with a column named “screen\_name”. The user can
+simply answer this argument with the name of any Twitter object in their
+environment and botscan will skip data collection and use the user’s
+data instead.
 
-The fourth argument determines whether retweets will be included if using the Search API and the fifth takes a number, less than one, that represents the desired threshold at which an account should be considered a bot. The default is .430, a reliable threshold as described by BotOMeter's creator [here](http://www.pewresearch.org/fact-tank/2018/04/19/qa-how-pew-research-center-identified-bots-on-twitter/).
+The next argument determines how long an open stream of tweets will be
+collected, with a default of 30 seconds. In order to gather a specific
+volume of tweets, it is suggested that the user run a small initial test
+to determine a rough rate of tweets for the given query. If the user
+prefers to use Twitter’s Search API, the next argument allows the user
+to specify the number of tweets to extract.
 
-The sixth argument allows the user to toggle between user-level and conversation-level summaries. The default is set to conversation-level data, understood as the proportion of the queried conversation that is bot-related. If <code>user\_level</code> is set to <code>TRUE</code>, <code>botscan</code> will return user-level data, understood to be the proportion of the queried conversation's authors that are estimated to be bots.
+The fourth argument takes a number, less than one, that represents the
+desired threshold at which an account should be considered a bot. The
+default is .430, a reliable threshold as described by BotOMeter’s
+creator
+[here](http://www.pewresearch.org/fact-tank/2018/04/19/qa-how-pew-research-center-identified-bots-on-twitter/).
 
-The seventh argument allows the user to toggle between Twitter's Search and Streaming APIs. The default is set to using the Streaming API, as it is unfiltered by Twitter and thus produces more accurate data. Search API data is filtered to eliminate low quality content, thus negatively impacting identification of bot accounts.
+The fifth argument allows the user to toggle between Twitter’s Search
+and Streaming APIs. The default is set to using the Streaming API, as it
+is unfiltered by Twitter and thus produces more accurate data. Search
+API data is filtered to eliminate low quality content, thus negatively
+impacting identification of bot accounts.
 
-The eighth argument allows the user to opt out of auto-parsing of data, primarily useful when dealing with large volumes of data. The ninth and final argument defaults to keeping the user informed about the progress of the tool in gathering and processing data with the <code>verbose</code> package but can be toggled off.
+The sixth argument allows the user to determine the volume of tweets
+desired when using the Search API. Note that this argument will be
+ignored when using the Streaming API.
+
+The seventh argument determines whether retweets will be included if
+using the Search API. Likewise, this argument will be ignored when using
+the Streaming API.
+
+The eighth argument allows the user to opt out of auto-parsing of data,
+primarily useful when dealing with large volumes of data. The ninth and
+final argument defaults to keeping the user informed about the progress
+of the tool in gathering and processing data with the
+<code>verbose</code> package but can be toggled off.
 
 ``` r
 ## load botscan
@@ -58,27 +110,33 @@ library(botscan)
 
 ## Enter query surrounded by quotation marks
 botscan("#rstats")
-#> [1] 0.1642276
 
-## Result is percentage - in this case, 16.42276%.
+## Result is a list of three objects, described below
 
 ## If desired, choose the stream time and threshold
 botscan("#rstats", timeout = 60, threshold = .995)
-#> [1] 0.02398524
 
 ## Alternatively, choose to use Twitter's Search API and options associated with it.
 botscan("#rstats", n_tweets = 1500, retweets = TRUE, search = TRUE, threshold = .995)
-#> [1] 0.03270932
-
-## Result is percentage - in this case, 2.398524%.
 
 ##If desired, scan only users rather than the conversation as a whole.
 botscan("#rstats", user_level = TRUE)
-#> [1] 0.1505155
-
-## Result is percentage - in this case, 15.05155%.
 ```
 
-This process takes some time, as botscan is currently built on a loop of BotOMeter. Efforts to mainstream this process are set as future goals. A standard pull of tweets via <code>botscan</code> processes approximately 11 to 12 accounts per minute in addition to the initial tweet streaming.
+The output from botscan is a list of three objects. The first is a
+dataframe including all raw data from Twitter and BotOMeter. The second
+is a string with the percentage of users in the data set that are
+estimated to be bots as determined by the user’s provided threshold. The
+third is the percentage of tweets that are estimated to be bot-authored
+as determined by the user’s provided threshold.
 
-Twitter rate limits cap the number of Search results returned to 18,000 every 15 minutes. Thus, excessive use of <code>botscan</code> in a short amount of time may result in a warning and inability to pull results. In this event, simply wait 15 minutes and try again. In an effort to avoid the Twitter rate limit cap, <code>botscan</code> defaults to returning 1000 results when <code>search = TRUE</code>.
+This process takes some time, as botscan is currently built on a loop of
+BotOMeter. A standard pull of tweets via botscan processes approximately
+11 to 12 accounts per minute in addition to the initial tweet streaming.
+
+Twitter rate limits cap the number of Search results returned to 18,000
+every 15 minutes. Thus, excessive use of botscan in a short amount of
+time may result in a warning and inability to pull results. In this
+event, simply wait 15 minutes and try again. In an effort to avoid the
+Twitter rate limit cap, botscan defaults to returning 1000 results when
+search = TRUE.

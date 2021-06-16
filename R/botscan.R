@@ -108,11 +108,16 @@ botscan <- function(x = "#rstats",
         }
         
       }
+<<<<<<< HEAD
   } else {
     
     tweets <- external_data
     
   }
+=======
+    
+  } else {tweets = external_data}
+>>>>>>> cce165bd9bb2db4c5454ad2d630ce5975fa33a56
 
   # Store unique usernames as a vector:
   
