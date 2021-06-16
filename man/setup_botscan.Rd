@@ -4,11 +4,16 @@
 \alias{setup_botscan}
 \title{setup_botscan}
 \usage{
-setup_botscan(mashape_key, consumer_key, consumer_secret, access_token,
-  access_token_secret)
+setup_botscan(
+  rapidapi_key,
+  consumer_key,
+  consumer_secret,
+  access_token,
+  access_token_secret
+)
 }
 \arguments{
-\item{mashape_key}{A string representing the mashape key}
+\item{rapidapi_key}{A string representing the RapidAPI key}
 
 \item{consumer_key}{A string representing the consumer key}
 
@@ -20,7 +25,7 @@ setup_botscan(mashape_key, consumer_key, consumer_secret, access_token,
 }
 \value{
 A list of length two with components
-\item{mashape_key}{The mashape key}
+\item{rapidapi_key}{The RapidAPI key}
 \item{twitter_app_auth}{A list of length four, including the consumer_key, 
 consumer_secret, access_token, and access_token_secret}
 }

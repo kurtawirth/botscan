@@ -1,21 +1,21 @@
 Package: botscan
 Type: Package
 Title: Scans Twitter Conversations For Bots
-Version: 2.0.1
+Version: 2.1.0
 Author: Kurt Wirth and Ryan T. Moore
 Maintainer: Kurt Wirth <KurtAWirth@gmail.com>
 Description: This package accepts any Twitter search query as an input and
     outputs the percentage of the conversation's tweets that are
     predicted to be authored by non-humans, or "bots". This tool uses rtweets 
     to search Twitter and botometer and its machine learning technique to 
-    analyze handles. 
+    analyze handles.
+Depends: R (>= 4.1.0)
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
-    magrittr,
     reticulate,
     rtweet
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Suggests: testthat

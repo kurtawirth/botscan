@@ -4,19 +4,34 @@
 \alias{botscan}
 \title{botscan}
 \usage{
-botscan(x, timeout = 30, threshold = 0.43, api = "stream",
-  n_tweets = 1000, retweets = FALSE, parse = TRUE, verbose = TRUE)
+botscan(
+  x = "#rstats",
+  external_data = NA,
+  timeout = 30,
+  threshold = NA,
+  api = "stream",
+  n_tweets = 1000,
+  retweets = FALSE,
+  parse = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{A string representing a Twitter search query, in quotation marks.}
+
+\item{external_data}{An optional dataframe with variable `screen_name`, 
+containing Twitter handles, for example, from a conversation. By default, 
+`botscan` collects tweets and creates such a data frame. If `external_data` 
+is set, then `x` is ignored.}
 
 \item{timeout}{A number representing the number of seconds the user wishes to
 stream tweets on the given search term. This is only applied when using the
 default STREAM Twitter API. Default is 30 seconds.}
 
-\item{threshold}{A number between zero and one that determines which botornot 
-probability threshold to return. Default is set at 0.43. Only users estimated 
-to be more likely than the threshold provided will be regarded as a bot.}
+\item{threshold}{An optional number between zero and one that determines 
+which botometer probability threshold to return. Default is missing (no 
+threshold). If specified, only users estimated to be more likely than the 
+threshold will be regarded as a bot.}
 
 \item{api}{A string specifying which Twitter API to collect data from, the 
 \code{"stream"} or \code{"search"} API.  Defaults to \code{"stream"}.}
@@ -40,9 +55,11 @@ A list of length 3: \itemize{
    \item \code{df}  Dataframe including all data. This includes original data 
    for each tweet as well as BotOMeter scores for each.
    \item \code{prop_user_level_bots}  User-level estimate of proportion of 
-   bots among accounts in the searched conversation.
+   bots among accounts in the searched conversation. Missing botiness scores 
+   are omitted.
    \item \code{prop_convo_level_bots}  Conversation-level estimate of the 
-   proportion of tweets in the searched conversation that are by bots.
+   proportion of tweets in the searched conversation that are by bots. 
+   Missing botiness scores are omitted.
 }
 }
 \description{
@@ -61,7 +78,7 @@ collecting tweets which posted before the function was called.
 }
 \examples{
 \dontrun{botscan("#rtweets")}
-\dontrun{botscan("trump")}
+\dontrun{botscan("biden")}
 
 ## The above examples fail unless you have created and installed Twitter 
 ## tokens, per instructions provided at http://rtweet.info/articles/auth.html.

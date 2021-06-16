@@ -3,4 +3,4 @@
 export(botscan)
 export(install_botometer)
 export(setup_botscan)
-importFrom(magrittr,"%>%")
+import(dplyr)
